@@ -1,7 +1,7 @@
-package me.tr.trlibs.api.mangers.database.types;
+package me.tr.trDatabase.database.types;
 
 
-import me.tr.trlibs.api.mangers.database.Database;
+import me.tr.trDatabase.database.Database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,8 +17,15 @@ public class SQLite implements Database {
 
     @Override
     public void connect() throws SQLException {
-        String URL = "jdbc:sqlite:" + path;
-        conn = DriverManager.getConnection(URL);
+        main.databaseType(DBType.SQLITE);
+        try {
+            Class.forName("org.sqlite.JDBC");
+            String URL = "jdbc:sqlite:" + path;
+            conn = DriverManager.getConnection(URL);
+        } catch (ClassNotFoundException e) {
+            main.logger().error("MySQL Driver not found!");
+            return;
+        }
     }
 
     @Override

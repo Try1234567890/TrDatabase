@@ -1,8 +1,7 @@
-package me.tr.trlibs.api.mangers.database.types;
+package me.tr.trDatabase.database.types;
 
 
-import me.tr.trlibs.api.logger.Logger;
-import me.tr.trlibs.api.mangers.database.Database;
+import me.tr.trDatabase.database.Database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,14 +25,15 @@ public class MariaDB implements Database {
 
     @Override
     public void connect() throws SQLException {
+        main.databaseType(DBType.MARIADB);
         try {
             Class.forName("org.mariadb.jdbc.Driver");
+            String URL = "jdbc:mariadb://" + host + ":" + port + "/" + name;
+            conn = DriverManager.getConnection(URL, user, password);
         } catch (ClassNotFoundException e) {
-            main.getLogger().log("MariaDB Driver not found!", Logger.Levels.ERROR);
+            main.logger().error("MariaDB Driver not found!");
             return;
         }
-        String URL = "jdbc:mariadb://" + host + ":" + port + "/" + name;
-        conn = DriverManager.getConnection(URL, user, password);
     }
 
 

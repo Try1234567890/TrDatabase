@@ -1,12 +1,12 @@
-package me.tr.trlibs.api.mangers.database;
+package me.tr.trDatabase.database;
 
-import me.tr.trlibs.TrLibs;
+import me.tr.trDatabase.TrDatabase;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface Database {
-    TrLibs main = TrLibs.getMain();
+    TrDatabase main = TrDatabase.main();
     void connect() throws SQLException;
     void disconnect() throws SQLException;
     boolean isConnected() throws SQLException;
