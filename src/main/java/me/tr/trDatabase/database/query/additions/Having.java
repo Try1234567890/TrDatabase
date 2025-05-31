@@ -23,7 +23,7 @@ public class Having {
         return this;
     }
 
-    public String execute() {
+    public String get() {
         if (this.conditions.isEmpty()) {
             return "";
         }

@@ -20,7 +20,7 @@ public class GroupBy {
         return this;
     }
 
-    public String execute() {
+    public String get() {
         if (Utility.isNull(this.column)) {
             return "";
         }

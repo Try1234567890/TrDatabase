@@ -10,8 +10,8 @@ import java.util.List;
 
 public class InsertBuilder extends QueryBuilder {
     private String table;
-    private List<String> columns = new ArrayList<>();
-    private List<Object> values = new ArrayList<>();
+    private final List<String> columns = new ArrayList<>();
+    private final List<Object> values = new ArrayList<>();
 
     public InsertBuilder(Connection connection) {
         super(connection);

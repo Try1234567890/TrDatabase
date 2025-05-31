@@ -12,8 +12,8 @@ import java.util.List;
 
 public class UpdateBuilder extends QueryBuilder {
     private String table;
-    private List<String> columns = new ArrayList<>();
-    private List<Object> values = new ArrayList<>();
+    private final List<String> columns = new ArrayList<>();
+    private final List<Object> values = new ArrayList<>();
     private Where where;
 
     public UpdateBuilder(Connection connection) {
@@ -65,7 +65,7 @@ public class UpdateBuilder extends QueryBuilder {
                         .map(column -> column + " = ?")
                         .toList()));
         if (where != null)
-            query.append(where.execute());
+            query.append(where.get());
         try (PreparedStatement st = connection().prepareStatement(query.toString())) {
             int index = 1;
             for (Object value : values) {

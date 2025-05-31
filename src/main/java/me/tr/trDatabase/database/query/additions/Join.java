@@ -56,7 +56,7 @@ public class Join {
         return this;
     }
 
-    public String execute() {
+    public String get() {
         if (Utility.isNull(table) || type == null) {
             return "";
         }

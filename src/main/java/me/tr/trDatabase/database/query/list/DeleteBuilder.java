@@ -39,7 +39,7 @@ public class DeleteBuilder extends QueryBuilder {
         StringBuilder query = new StringBuilder();
         query.append("DELETE FROM ")
                 .append(table);
-        if (where != null) query.append(where.execute());
+        if (where != null) query.append(where.get());
         try (PreparedStatement st = connection().prepareStatement(query.toString())) {
             for (int i = 0; i < where.values().size(); i++) {
                 st.setObject(i + 1, where.values().get(i));

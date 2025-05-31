@@ -35,15 +35,10 @@ public class Where {
         return this;
     }
 
-    public String execute() {
+    public String get() {
         if (Utility.isNull(where)) {
             return "";
         }
         return " WHERE " + where;
-    }
-
-    @Override
-    public String toString() {
-        return where;
     }
 }

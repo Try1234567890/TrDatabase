@@ -38,7 +38,7 @@ public class Limit {
         return this;
     }
 
-    public String execute() {
+    public String get() {
         DBType dbType = TrDatabase.main().databaseType();
         if (dbType == null) {
             return "";

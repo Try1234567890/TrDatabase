@@ -98,35 +98,35 @@ public class SelectBuilder extends QueryBuilder {
                 Add Join if not null. Join = " INNER JOIN ordini USING (UserID) ON users.UserID = ordini.UserID"
                 Query: "SELECT DISTINCT users.UserID, users.Name FROM users INNER JOIN ordini USING (UserID) ON users.UserID = ordini.UserID"
                 */
-                query.append(join.execute());
+                query.append(join.get());
             }
             if (where != null) {
                 /*
                 Add Where if not null. Where = " WHERE ordini.Amount > 3"
                 Query: "SELECT DISTINCT users.UserID, users.Name FROM users INNER JOIN ordini USING (UserID) ON users.UserID = ordini.UserID WHERE ordini.Amount > 3"
                 */
-                query.append(where.execute());
+                query.append(where.get());
             }
             if (groupBy != null) {
                 /*
                 Add GroupBy if not null. GroupBy = " GROUP BY users.Name"
                 Query: "SELECT DISTINCT users.UserID, users.Name FROM users INNER JOIN ordini USING (UserID) ON users.UserID = ordini.UserID WHERE ordini.Amount > 3 GROUP BY users.Name"
                 */
-                query.append(groupBy.execute());
+                query.append(groupBy.get());
             }
             if (having != null) {
                 /*
                 Add Having if not null. Having = " HAVING COUNT(ordini.ID) <= 15 and COUNT(ordini.LargeOrders) >= 15"
                 Query: "SELECT DISTINCT users.UserID, users.Name FROM users INNER JOIN ordini USING (UserID) ON users.UserID = ordini.UserID WHERE ordini.Amount > 3 GROUP BY users.Name HAVING COUNT(ordini.ID) <= 15 and COUNT(ordini.LargeOrders) >= 15"
                 */
-                query.append(having.execute());
+                query.append(having.get());
             }
             if (orderBy != null) {
                 /*
                 Add OrderBy if not null. OrderBy = " ORDER BY users.ID ASC, ordini.ID DESC"
                 Query: "SELECT DISTINCT users.UserID, users.Name FROM users INNER JOIN ordini USING (UserID) ON users.UserID = ordini.UserID WHERE ordini.Amount > 3 GROUP BY users.Name HAVING COUNT(ordini.ID) <= 15 and COUNT(ordini.LargeOrders) >= 15 ORDER BY users.ID ASC, ordini.ID DESC"
                 */
-                query.append(" ORDER BY " + String.join(", ", orderBy.stream().map(OrderBy::execute).toList()));
+                query.append(" ORDER BY " + String.join(", ", orderBy.stream().map(OrderBy::get).toList()));
             }
             if (limit != null) {
                 /*
@@ -134,7 +134,7 @@ public class SelectBuilder extends QueryBuilder {
                 SQLite | MariaDB Query: "SELECT DISTINCT users.UserID, users.Name FROM users INNER JOIN ordini USING (UserID) ON users.UserID = ordini.UserID WHERE ordini.Amount > 3 GROUP BY users.Name HAVING COUNT(ordini.ID) <= 15 and COUNT(ordini.LargeOrders) >= 15 ORDER BY users.ID ASC, ordini.ID DESC  LIMIT 10 OFFSET 5"
                 MySQL Query: "SELECT DISTINCT users.UserID, users.Name FROM users INNER JOIN ordini USING (UserID) ON users.UserID = ordini.UserID WHERE ordini.Amount > 3 GROUP BY users.Name HAVING COUNT(ordini.ID) <= 15 and COUNT(ordini.LargeOrders) >= 15 ORDER BY users.ID ASC, ordini.ID DESC  LIMIT 10, 5"
                 */
-                query.append(limit.execute());
+                query.append(limit.get());
             }
             query.append(";");
             /*

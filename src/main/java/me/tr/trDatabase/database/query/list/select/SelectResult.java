@@ -13,22 +13,21 @@ public class SelectResult {
         this.results = results;
     }
 
-    public List<Map<String, Object>> select() {
+    public List<Map<String, Object>> getAll() {
         return results;
     }
 
-    public @Nullable Map<String, Object> selectLast() {
+    public @Nullable Map<String, Object> getLast() {
         return results.isEmpty() ? null : results.getFirst();
     }
 
-    public @Nullable Map<String, Object> selectFirst() {
+    public @Nullable Map<String, Object> getFirst() {
         return results.isEmpty() ? null : results.getFirst();
     }
 
-    public @Nullable Map<String, Object> selectAt(int index) {
+    public @Nullable Map<String, Object> getAt(int index) {
         return results.isEmpty() ? null : results.get(index);
     }
-
 
     @Override
     public String toString() {

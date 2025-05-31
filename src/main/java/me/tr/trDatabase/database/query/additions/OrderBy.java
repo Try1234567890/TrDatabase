@@ -35,7 +35,7 @@ public class OrderBy {
         return this;
     }
 
-    public String execute() {
+    public String get() {
         if (Utility.isNull(this.column)) {
             return "";
         }
