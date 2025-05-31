@@ -1,5 +1,6 @@
 package me.tr.trDatabase.database.query.list;
 
+import me.tr.trDatabase.Utility;
 import me.tr.trDatabase.database.query.additions.Where;
 
 import java.sql.Connection;
@@ -30,11 +31,15 @@ public class DeleteBuilder extends QueryBuilder {
         return this;
     }
 
-    public boolean delete() {
+    public boolean execute() {
+        if (Utility.isNull(table)) {
+            main.logger().error("Table name cannot be null!");
+            return false;
+        }
         StringBuilder query = new StringBuilder();
         query.append("DELETE FROM ")
                 .append(table);
-        if (where != null) query.append(" WHERE ").append(where);
+        if (where != null) query.append(where.execute());
         try (PreparedStatement st = connection().prepareStatement(query.toString())) {
             for (int i = 0; i < where.values().size(); i++) {
                 st.setObject(i + 1, where.values().get(i));

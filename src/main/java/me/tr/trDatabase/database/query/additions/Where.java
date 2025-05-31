@@ -1,10 +1,16 @@
 package me.tr.trDatabase.database.query.additions;
 
+import me.tr.trDatabase.Utility;
+
 import java.util.List;
 
 public class Where {
     private String where;
     private List<Object> values;
+
+    public Where() {
+
+    }
 
     public Where(String where, Object... values) {
         this.where = where;
@@ -27,6 +33,13 @@ public class Where {
     public Where values(Object... values) {
         this.values = List.of(values);
         return this;
+    }
+
+    public String execute() {
+        if (Utility.isNull(where)) {
+            return "";
+        }
+        return " WHERE " + where;
     }
 
     @Override

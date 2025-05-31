@@ -1,5 +1,6 @@
 package me.tr.trDatabase.database.query.list;
 
+import me.tr.trDatabase.Utility;
 import me.tr.trDatabase.database.query.additions.Where;
 
 import java.sql.Connection;
@@ -45,8 +46,12 @@ public class UpdateBuilder extends QueryBuilder {
     }
 
     public boolean execute() {
-        if (columns.isEmpty()) {
-            main.logger().error("Columns isn't specified and cannot be null!");
+        if (Utility.isNull(table)) {
+            main.logger().error("Table name cannot be null!");
+            return false;
+        }
+        if (columns.isEmpty() || values.isEmpty()) {
+            main.logger().error("Columns or values isn't specified and cannot be null!");
             return false;
         }
         if (columns.size() != values.size()) {
@@ -58,9 +63,9 @@ public class UpdateBuilder extends QueryBuilder {
                 .append(" SET ")
                 .append(String.join(", ", columns.stream()
                         .map(column -> column + " = ?")
-                        .toArray(String[]::new)));
-        if (where != null) query.append(" WHERE ").append(where);
-
+                        .toList()));
+        if (where != null)
+            query.append(where.execute());
         try (PreparedStatement st = connection().prepareStatement(query.toString())) {
             int index = 1;
             for (Object value : values) {

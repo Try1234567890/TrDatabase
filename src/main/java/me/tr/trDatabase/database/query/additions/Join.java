@@ -1,5 +1,7 @@
 package me.tr.trDatabase.database.query.additions;
 
+import me.tr.trDatabase.Utility;
+
 public class Join {
     private String table;
     private String where;
@@ -21,6 +23,10 @@ public class Join {
     public Join(String table, String where) {
         this.table = table;
         this.where = where;
+    }
+
+    public Join() {
+
     }
 
     public JoinType type() {
@@ -51,6 +57,9 @@ public class Join {
     }
 
     public String execute() {
+        if (Utility.isNull(table) || type == null) {
+            return "";
+        }
         StringBuilder query = new StringBuilder();
         query.append(" ")
                 .append(type.name())

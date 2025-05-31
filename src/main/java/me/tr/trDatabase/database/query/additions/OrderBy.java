@@ -1,5 +1,7 @@
 package me.tr.trDatabase.database.query.additions;
 
+import me.tr.trDatabase.Utility;
+
 public class OrderBy {
     private String column;
     private OrderByType orderByType;
@@ -34,14 +36,17 @@ public class OrderBy {
     }
 
     public String execute() {
-        switch (orderByType) {
-            case ASC:
-                return orderByAsc();
-            case DESC:
-                return orderByDesc();
-            default:
-                return orderBy();
+        if (Utility.isNull(this.column)) {
+            return "";
         }
+        if (orderByType == null) {
+            return orderBy();
+        }
+        return switch (orderByType) {
+            case ASC -> orderByAsc();
+            case DESC -> orderByDesc();
+            default -> orderBy();
+        };
     }
 
     public String orderBy() {

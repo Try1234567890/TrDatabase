@@ -1,10 +1,10 @@
 package me.tr.trDatabase.database.query.list;
 
+import me.tr.trDatabase.Utility;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import static me.tr.trDatabase.database.Database.main;
 
 public class SchemaBuilder extends QueryBuilder {
     private String schema;
@@ -29,10 +29,12 @@ public class SchemaBuilder extends QueryBuilder {
 
 
     public void execute() {
-        try (Statement st = connection().createStatement()) {
-            st.executeUpdate(schema);
-        } catch (SQLException e) {
-            main.logger().error("Error while executing schema: " + schema + " [ExceptionMessage]", e);
+        if (!Utility.isNull(schema)) {
+            try (Statement st = connection().createStatement()) {
+                st.executeUpdate(schema);
+            } catch (SQLException e) {
+                main.logger().error("Error while executing schema: " + schema + " [ExceptionMessage]", e);
+            }
         }
     }
 }

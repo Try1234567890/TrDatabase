@@ -3,11 +3,13 @@ package me.tr.trDatabase.database.query.additions;
 import me.tr.trDatabase.TrDatabase;
 import me.tr.trDatabase.database.types.DBType;
 
-import java.util.Objects;
-
 public class Limit {
-    private int limit;
+    private int limit = 0;
     private int offset = 0;
+
+    public Limit() {
+
+    }
 
     public Limit(int limit) {
         this.limit = limit;
@@ -37,9 +39,20 @@ public class Limit {
     }
 
     public String execute() {
-        if (Objects.requireNonNull(TrDatabase.main().databaseType()) == DBType.MYSQL) {
-            return " LIMIT " + limit + ", " + offset;
+        DBType dbType = TrDatabase.main().databaseType();
+        if (dbType == null) {
+            return "";
         }
-        return " LIMIT " + offset + ", " + limit;
+        int limitValue = Math.max(0, limit);
+        int offsetValue = Math.max(0, offset);
+        if (dbType == DBType.MYSQL) {
+            // MySQL: LIMIT [offset], [limit]
+            return offsetValue == 0
+                    ? " LIMIT " + limitValue
+                    : " LIMIT " + limitValue + ", " + offsetValue;
+        } else {
+            // SQLite & MARIADB: LIMIT [limit] OFFSET [offset]
+            return " LIMIT " + limitValue + (offsetValue > 0 ? " OFFSET " + offsetValue : "");
+        }
     }
 }

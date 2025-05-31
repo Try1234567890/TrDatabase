@@ -1,5 +1,7 @@
 package me.tr.trDatabase.database.query.list;
 
+import me.tr.trDatabase.Utility;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -31,8 +33,12 @@ public class InsertBuilder extends QueryBuilder {
     }
 
     public boolean execute() {
-        if (columns.isEmpty()) {
-            main.logger().error("Columns isn't specified and cannot be null!");
+        if (Utility.isNull(table)) {
+            main.logger().error("Table name cannot be null!");
+            return false;
+        }
+        if (columns.isEmpty() || values.isEmpty()) {
+            main.logger().error("Columns or values isn't specified and them cannot be null!");
             return false;
         }
         if (columns.size() != values.size()) {
