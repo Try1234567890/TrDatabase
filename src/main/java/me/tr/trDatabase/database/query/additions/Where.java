@@ -39,6 +39,9 @@ public class Where {
         if (Utility.isNull(where)) {
             return "";
         }
+        if (Utility.countChars(where, '?') != values.size()) {
+            return "";
+        }
         return " WHERE " + where;
     }
 }

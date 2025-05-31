@@ -13,6 +13,8 @@ public class SelectResult {
         this.results = results;
     }
 
+    public SelectResult() {}
+
     public List<Map<String, Object>> getAll() {
         return results;
     }
