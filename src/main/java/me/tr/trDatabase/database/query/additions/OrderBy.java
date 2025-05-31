@@ -4,6 +4,13 @@ public class OrderBy {
     private String column;
     private OrderByType orderByType;
 
+    public OrderBy() {
+
+    }
+
+    public OrderBy(String column) {
+        this.column = column;
+    }
 
     public OrderBy(String column, OrderByType orderByType) {
         this.column = column;

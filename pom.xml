@@ -6,7 +6,7 @@
 
     <groupId>me.tr</groupId>
     <artifactId>TrDatabase</artifactId>
-    <version>1.0.0-beta</version>
+    <version>1.0.1-beta-fix</version>
     <packaging>jar</packaging>
     <name>TrLogger</name>
 

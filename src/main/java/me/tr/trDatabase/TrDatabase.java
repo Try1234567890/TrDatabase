@@ -8,9 +8,10 @@ public class TrDatabase {
     private ConsoleLogger logger;
     private DBType databaseType;
 
+
+
     public TrDatabase() {
         main = this;
-        logger = new ConsoleLogger();
     }
 
 

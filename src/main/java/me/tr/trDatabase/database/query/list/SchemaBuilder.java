@@ -9,6 +9,10 @@ import static me.tr.trDatabase.database.Database.main;
 public class SchemaBuilder extends QueryBuilder {
     private String schema;
 
+    public SchemaBuilder(Connection connection) {
+        super(connection);
+    }
+
     public SchemaBuilder(Connection connection, String schema) {
         super(connection);
         this.schema = schema;
