@@ -1,6 +1,7 @@
 package me.tr.trDatabase.database.types;
 
 
+import me.tr.trDatabase.TrDatabase;
 import me.tr.trDatabase.database.Database;
 
 import java.sql.Connection;
@@ -8,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MariaDB implements Database {
+    private final TrDatabase main = TrDatabase.main();
     private Connection conn;
     String host;
     int port;
