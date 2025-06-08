@@ -17,4 +17,14 @@ public class Utility {
         return count;
     }
 
+    public static String checkQuotes(String str) {
+        if (!str.startsWith("'")) {
+            str = '\'' + str;
+        }
+        if (!str.endsWith("'")) {
+            str = str + '\'';
+        }
+        return str;
+    }
+
 }

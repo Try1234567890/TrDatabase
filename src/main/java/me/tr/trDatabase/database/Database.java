@@ -1,7 +1,5 @@
 package me.tr.trDatabase.database;
 
-import me.tr.trDatabase.TrDatabase;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 

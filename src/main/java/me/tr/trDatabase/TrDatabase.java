@@ -1,34 +1,38 @@
 package me.tr.trDatabase;
 
-import me.tr.trDatabase.database.types.DBType;
+import me.tr.trDatabase.database.DBType;
 import me.tr.trLogger.logger.ConsoleLogger;
 
 public class TrDatabase {
-    private static TrDatabase main;
+    private static TrDatabase instance;
     private ConsoleLogger logger;
-    private DBType databaseType;
+    private DBType dbType;
 
-
-
-    public TrDatabase() {
-        main = this;
+    private TrDatabase() {
+        instance = this;
     }
 
 
-    public static TrDatabase main() {
-        return main;
+    public static TrDatabase instance() {
+        if (instance == null) {
+            instance = new TrDatabase();
+        }
+        return instance;
     }
 
     public ConsoleLogger logger() {
+        if (logger == null) {
+            logger = new ConsoleLogger();
+        }
         return logger;
     }
 
-    public TrDatabase databaseType(DBType databaseType) {
-        this.databaseType = databaseType;
+    public TrDatabase dbType(DBType dbType) {
+        this.dbType = dbType;
         return this;
     }
 
-    public DBType databaseType() {
-        return databaseType;
+    public DBType dbType() {
+        return dbType;
     }
 }
