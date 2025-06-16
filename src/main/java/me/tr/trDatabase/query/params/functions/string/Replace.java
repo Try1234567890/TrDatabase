@@ -1,5 +1,6 @@
 package me.tr.trDatabase.query.params.functions.string;
 
+import me.tr.trDatabase.TrDatabase;
 import me.tr.trDatabase.Utility;
 
 public class Replace extends StringFunc {
@@ -26,6 +27,18 @@ public class Replace extends StringFunc {
 
     @Override
     public String toSql() {
+        if (Utility.isNull(str())) {
+            TrDatabase.instance().logger().error("String cannot be null in REPLACE(String, String, String) constraint.");
+            return "";
+        }
+        if (Utility.isNull(from())) {
+            TrDatabase.instance().logger().error("String to replace cannot be null in REPLACE(String, String, String) constraint.");
+            return "";
+        }
+        if (Utility.isNull(to())) {
+            TrDatabase.instance().logger().error("String replace cannot be null in REPLACE(String, String, String) constraint.");
+            return "";
+        }
         return "REPLACE(" + str() + ", " + from() + ", " + to() + ")";
     }
 }

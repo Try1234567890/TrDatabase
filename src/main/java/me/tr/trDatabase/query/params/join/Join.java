@@ -1,5 +1,6 @@
 package me.tr.trDatabase.query.params.join;
 
+import me.tr.trDatabase.TrDatabase;
 import me.tr.trDatabase.query.table.Table;
 import me.tr.trDatabase.query.params.where.Condition;
 import me.tr.trDatabase.query.Select;
@@ -70,6 +71,14 @@ public class Join {
     }
 
     public String toSql() {
+        if (table() == null) {
+            TrDatabase.instance().logger().error("Table cannot be null in JOIN clause.");
+            return "";
+        }
+        if (conditions() == null) {
+            TrDatabase.instance().logger().error("Conditions cannot be null in JOIN clause.");
+            return "";
+        }
         return " JOIN " + table.toSql() + " ON " + Arrays.stream(conditions()).map(Condition::toSql).collect(Collectors.joining(""));
     }
 }

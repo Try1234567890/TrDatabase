@@ -1,5 +1,6 @@
 package me.tr.trDatabase.query.table;
 
+import me.tr.trDatabase.TrDatabase;
 import me.tr.trDatabase.Utility;
 
 public class Table {
@@ -41,6 +42,10 @@ public class Table {
     }
 
     public String toSql() {
+        if (Utility.isNull(name)) {
+            TrDatabase.instance().logger().error("Name cannot be null in Tables.");
+            return "";
+        }
         return name + (!Utility.isNull(as) ? ' ' + as : "");
     }
 

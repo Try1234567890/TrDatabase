@@ -1,5 +1,7 @@
 package me.tr.trDatabase.query.params.where;
 
+import me.tr.trDatabase.TrDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,10 +10,6 @@ public class Where extends Condition{
     private final List<Condition> conditions = new ArrayList<>();
 
     public Where() {
-    }
-
-    private Where(Condition condition) {
-        this.conditions.add(condition);
     }
 
     private Where(Condition... condition) {
@@ -40,6 +38,10 @@ public class Where extends Condition{
 
     @Override
     public String toSql() {
+        if (conditions() == null) {
+            TrDatabase.instance().logger().error("Conditions cannot be null in WHERE clause.");
+            return "";
+        }
         return " WHERE " + conditions.stream().map(Condition::toSql).collect(Collectors.joining(""));
     }
 

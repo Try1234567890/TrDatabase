@@ -1,5 +1,7 @@
 package me.tr.trDatabase.query.params.functions.string.sub;
 
+import me.tr.trDatabase.TrDatabase;
+import me.tr.trDatabase.Utility;
 import me.tr.trDatabase.query.params.functions.string.StringFunc;
 
 public class Position extends StringFunc {
@@ -16,6 +18,10 @@ public class Position extends StringFunc {
 
     @Override
     public String toSql() {
+        if (Utility.isNull(str()) || Utility.isNull(sub)) {
+            TrDatabase.instance().logger().error("String and sub cannot be null in POSITION(String, String) constraint and " + (Utility.isNull(sub) ? "Sub" : "String") + " is null");
+            return "";
+        }
         return "POSITION(" + sub() + " IN " + str() + ")";
     }
 }

@@ -1,5 +1,6 @@
 package me.tr.trDatabase.query.params;
 
+import me.tr.trDatabase.TrDatabase;
 import me.tr.trDatabase.Utility;
 import me.tr.trDatabase.query.params.functions.Function;
 
@@ -67,6 +68,10 @@ public class Column {
     }
 
     private String sql() {
+        if (Utility.isNull(name)) {
+            TrDatabase.instance().logger().error("Name cannot be null in Columns.");
+            return "";
+        }
         return distinct + name + (!Utility.isNull(as) ? " AS " + as : "");
     }
 

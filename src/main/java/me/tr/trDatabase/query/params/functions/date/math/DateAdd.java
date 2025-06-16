@@ -1,10 +1,25 @@
 package me.tr.trDatabase.query.params.functions.date.math;
 
+import me.tr.trDatabase.TrDatabase;
+import me.tr.trDatabase.Utility;
+
 public class DateAdd extends DateOperation {
 
 
     @Override
     public String toSql() {
-        return "DATE_ADD('" + date() + "', INTERVAL " + amount() + " " + unit() + ")";
+        if (Utility.isNull(date())) {
+            TrDatabase.instance().logger().error("Date cannot be null in DATE_ADD() constraint");
+            return "";
+        }
+        if (amount() == -1) {
+            TrDatabase.instance().logger().error("Interval cannot be null in DATE_ADD() constraint");
+            return "";
+        }
+        if (unit() == null) {
+            TrDatabase.instance().logger().error("Unit cannot be null in DATE_ADD() constraint");
+            return "";
+        }
+        return "DATE_ADD(" + Utility.checkQuotes(date()) + ", INTERVAL " + amount() + " " + unit() + ")";
     }
 }

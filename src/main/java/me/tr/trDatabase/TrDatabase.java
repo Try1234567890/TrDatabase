@@ -27,9 +27,8 @@ public class TrDatabase {
         return logger;
     }
 
-    public TrDatabase dbType(DBType dbType) {
+    public void dbType(DBType dbType) {
         this.dbType = dbType;
-        return this;
     }
 
     public DBType dbType() {

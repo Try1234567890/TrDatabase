@@ -7,11 +7,20 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
+/**
+ * This class represents an SQLite database.
+ */
 public class SQLite implements Database {
     private final TrDatabase main = TrDatabase.instance();
     private Connection conn;
     private final String path;
 
+    /**
+     * Create a new instance of {@link SQLite}
+     *
+     * @param path The path to the database.
+     */
     public SQLite(String path) {
         this.path = path;
     }
@@ -21,8 +30,11 @@ public class SQLite implements Database {
         main.dbType(DBType.SQLITE);
         try {
             Class.forName("org.sqlite.JDBC");
-            String URL = "jdbc:sqlite:" + path;
-            conn = DriverManager.getConnection(URL);
+            if (!isSQLite()) {
+                throw new SQLException("Object found at provided path is not an SQLite database: " + path);
+            }
+            String url = "jdbc:sqlite:" + path;
+            conn = DriverManager.getConnection(url);
         } catch (ClassNotFoundException e) {
             main.logger().error("MySQL Driver not found!");
             return;
@@ -42,5 +54,14 @@ public class SQLite implements Database {
     @Override
     public Connection getConnection() {
         return conn;
+    }
+
+    private boolean isSQLite() {
+        String ext = path.substring(path.lastIndexOf('.') + 1);
+        return ext.equalsIgnoreCase("sqlite") ||
+                ext.equalsIgnoreCase("db") ||
+                ext.equalsIgnoreCase("sqlite3") ||
+                ext.equalsIgnoreCase("db3") ||
+                ext.equalsIgnoreCase("s3db");
     }
 }

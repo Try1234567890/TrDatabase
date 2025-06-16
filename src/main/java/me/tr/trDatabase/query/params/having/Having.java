@@ -1,5 +1,6 @@
 package me.tr.trDatabase.query.params.having;
 
+import me.tr.trDatabase.TrDatabase;
 import me.tr.trDatabase.query.params.where.Condition;
 
 import java.util.ArrayList;
@@ -27,6 +28,10 @@ public class Having {
     }
 
     public String toSql() {
+        if (conditions.isEmpty()) {
+            TrDatabase.instance().logger().error("Conditions cannot be null in Having(Condition...) clause.");
+            return "";
+        }
         return " HAVING " + conditions.stream().map(Condition::toSql).collect(Collectors.joining(""));
     }
 

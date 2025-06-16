@@ -1,5 +1,7 @@
 package me.tr.trDatabase.query.params.where;
 
+import me.tr.trDatabase.TrDatabase;
+
 import java.util.stream.Collectors;
 
 public class When extends Where {
@@ -26,6 +28,10 @@ public class When extends Where {
 
     @Override
     public String toSql() {
+        if (conditions() == null) {
+            TrDatabase.instance().logger().error("Conditions cannot be null in WHEN clause.");
+            return "";
+        }
         return "WHEN " + conditions().stream().map(Condition::toSql).collect(Collectors.joining(""));
     }
 }

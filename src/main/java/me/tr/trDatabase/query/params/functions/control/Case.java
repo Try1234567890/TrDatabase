@@ -1,5 +1,6 @@
 package me.tr.trDatabase.query.params.functions.control;
 
+import me.tr.trDatabase.TrDatabase;
 import me.tr.trDatabase.Utility;
 import me.tr.trDatabase.query.params.where.When;
 
@@ -47,6 +48,22 @@ public class Case extends Control {
 
     @Override
     public String toSql() {
+        if (when == null) {
+            TrDatabase.instance().logger().error("\"When\" condition cannot be null in case functions");
+            return "";
+        }
+        if (Utility.isNull(then)) {
+            TrDatabase.instance().logger().error("\"Then\" cannot be null in case functions");
+            return "";
+        }
+        if (Utility.isNull(otherwise)) {
+            TrDatabase.instance().logger().error("\"Otherwise\" cannot be null in case functions");
+            return "";
+        }
+        if (Utility.isNull(end)) {
+            TrDatabase.instance().logger().error("\"End\" cannot be null in case functions");
+            return "";
+        }
         return "CASE " + when.toSql() + ' ' + " THEN " + then + " ELSE " + otherwise + " END AS " + end;
     }
 }

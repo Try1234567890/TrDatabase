@@ -18,6 +18,7 @@ public class Utility {
     }
 
     public static String checkQuotes(String str) {
+        if (str == null) return "";
         if (!str.startsWith("'")) {
             str = '\'' + str;
         }

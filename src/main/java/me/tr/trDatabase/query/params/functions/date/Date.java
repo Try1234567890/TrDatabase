@@ -1,26 +1,32 @@
 package me.tr.trDatabase.query.params.functions.date;
 
+import me.tr.trDatabase.TrDatabase;
+import me.tr.trDatabase.Utility;
 import me.tr.trDatabase.query.params.Column;
 
 public class Date extends AbstractDate {
-    private Column column;
+    private String column;
 
-    public Column column() {
+    public String column() {
         return column;
     }
 
     public Date column(String column) {
-        this.column = Column.of(column);
+        this.column = column;
         return this;
     }
 
     public Date column(Column column) {
-        this.column = column;
+        this.column = column.name();
         return this;
     }
 
     @Override
     public String toSql() {
-        return "DATE(" + column().name() + ")";
+        if (Utility.isNull(column)) {
+            TrDatabase.instance().logger().error("Column cannot be null in DATE(Column) constraint");
+            return "";
+        }
+        return "DATE(" + column() + ")";
     }
 }

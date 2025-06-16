@@ -1,5 +1,6 @@
 package me.tr.trDatabase.query.params.orderby;
 
+import me.tr.trDatabase.TrDatabase;
 import me.tr.trDatabase.query.params.functions.Function;
 import me.tr.trDatabase.query.params.where.Condition;
 
@@ -94,6 +95,10 @@ public class OrderBy {
     }
 
     public String toSql() {
+        if (columns.isEmpty()) {
+            TrDatabase.instance().logger().error("Columns cannot be null or empty in ORDER BY clause.");
+            return "";
+        }
         return " ORDER BY " + String.join(", ", columns);
     }
 

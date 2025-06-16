@@ -1,8 +1,10 @@
 package me.tr.trDatabase.query.params.limit;
 
+import me.tr.trDatabase.TrDatabase;
+
 public class Limit {
-    private int limit = 0;
-    private int offset = 0;
+    private int limit;
+    private int offset;
 
     private Limit(int limit, int offset) {
         this.limit = limit;
@@ -28,6 +30,10 @@ public class Limit {
     }
 
     public String toSql() {
+        if (limit == -1) {
+            TrDatabase.instance().logger().error("Limit cannot be null in Limit(int, int) clause.");
+            return "";
+        }
         return " LIMIT " + limit + (offset > 0 ? " OFFSET " + offset : "");
     }
 }

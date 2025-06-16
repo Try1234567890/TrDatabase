@@ -1,5 +1,7 @@
 package me.tr.trDatabase.query.params.functions.control;
 
+import me.tr.trDatabase.TrDatabase;
+
 public class NullIf extends Control {
     private Object valueLeft;
     private Object valueRight;
@@ -25,6 +27,10 @@ public class NullIf extends Control {
 
     @Override
     public String toSql() {
+        if (valueLeft == null || valueRight == null) {
+            TrDatabase.instance().logger().error("NullIf(Obj, Obj) constrains cannot contains null values and " + (valueLeft == null ? "Left" : "Right") + " value is null.");
+            return "";
+        }
         return "NULLIF(" + valueLeft() + ", " + valueRight() + ")";
     }
 }

@@ -1,7 +1,8 @@
 package me.tr.trDatabase.query;
 
+import me.tr.trDatabase.TrDatabase;
+import me.tr.trDatabase.Utility;
 import me.tr.trDatabase.query.params.Column;
-import me.tr.trDatabase.query.table.Table;
 import me.tr.trDatabase.query.params.functions.Function;
 import me.tr.trDatabase.query.params.groupby.GroupBy;
 import me.tr.trDatabase.query.params.having.Having;
@@ -10,6 +11,7 @@ import me.tr.trDatabase.query.params.limit.Limit;
 import me.tr.trDatabase.query.params.orderby.OrderBy;
 import me.tr.trDatabase.query.params.where.Condition;
 import me.tr.trDatabase.query.params.where.Where;
+import me.tr.trDatabase.query.table.Table;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,6 +55,11 @@ public class Select implements Query {
     }
 
     public Select table(Table table) {
+        this.table = table;
+        return this;
+    }
+
+    public Select from(Table table) {
         this.table = table;
         return this;
     }
@@ -116,17 +123,22 @@ public class Select implements Query {
     }
 
     public String toSql() {
-        return select
-                + String.join(", ", columns.stream().map(Column::toSql).toList()) + ' '
-                + "FROM " + table.toSql()
-                + (join != null ? String.join("", Arrays.stream(join).map(Join::toSql).toList()) : "")
-                + (where != null ? where.toSql() : "")
-                + (groupBy != null ? groupBy.toSql() : "")
-                + (having != null ? having.toSql() : "")
-                + (orderBy != null ? orderBy.toSql() : "")
-                + (limit != null ? limit.toSql() : "")
-                + ';'
-                ;
+        if (columns.isEmpty()) {
+            TrDatabase.instance().logger().error("Columns cannot be null in SELECT query.");
+            return "";
+        }
+        if (table == null) {
+            TrDatabase.instance().logger().error("Table cannot be null in SELECT query.");
+            return "";
+        }
+        String sql = select + String.join(", ", columns.stream().map(Column::toSql).toList()) + ' ' + "FROM " + table.toSql() + (join != null ? String.join("", Arrays.stream(join).map(Join::toSql).toList()) : "") + (where != null ? where.toSql() : "") + (groupBy != null ? groupBy.toSql() : "") + (having != null ? having.toSql() : "") + (orderBy != null ? orderBy.toSql() : "") + (limit != null ? limit.toSql() : "") + ';';
+        int qMAmount = Utility.countChars(sql, '?');
+        int parameterSize = parameters.size();
+        if (qMAmount != parameterSize) {
+            TrDatabase.instance().logger().error("SQL parameters not correspond.\n Question Marks: " + qMAmount + "\n Parameters: " + parameters + " (" + parameterSize + ')');
+            return "";
+        }
+        return sql;
     }
 
     public List<Object> parameters() {

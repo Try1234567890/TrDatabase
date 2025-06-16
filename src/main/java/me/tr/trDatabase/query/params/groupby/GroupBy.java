@@ -1,5 +1,6 @@
 package me.tr.trDatabase.query.params.groupby;
 
+import me.tr.trDatabase.TrDatabase;
 import me.tr.trDatabase.query.params.functions.Function;
 import me.tr.trDatabase.query.params.functions.control.Control;
 import me.tr.trDatabase.query.params.functions.date.Date;
@@ -79,6 +80,10 @@ public class GroupBy {
 
 
     public String toSql() {
+        if (columns.isEmpty()) {
+            TrDatabase.instance().logger().error("Columns cannot be null in GroupBy(Column...) clause.");
+            return "";
+        }
         return " GROUP BY " + String.join(", ", columns);
     }
 
