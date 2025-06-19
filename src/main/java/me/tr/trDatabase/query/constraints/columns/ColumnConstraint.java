@@ -20,7 +20,7 @@ public abstract class ColumnConstraint implements Query {
         return new AutoIncrement();
     }
 
-    public static ColumnConstraint def(String value) {
+    public static ColumnConstraint def(Object value) {
         return new Default().value(value);
     }
 

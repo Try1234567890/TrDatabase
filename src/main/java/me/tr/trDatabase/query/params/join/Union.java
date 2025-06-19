@@ -1,7 +1,7 @@
 package me.tr.trDatabase.query.params.join;
 
 import me.tr.trDatabase.TrDatabase;
-import me.tr.trDatabase.query.Select;
+import me.tr.trDatabase.query.sql.Select;
 
 public class Union extends Join {
     private Select right;

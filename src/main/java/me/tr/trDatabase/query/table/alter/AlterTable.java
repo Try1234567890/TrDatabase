@@ -22,7 +22,7 @@ public abstract class AlterTable implements Query {
         return table;
     }
 
-    protected AlterTable table(String table) {
+    public AlterTable table(String table) {
         this.table = table;
         return this;
     }

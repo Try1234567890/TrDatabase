@@ -3,7 +3,7 @@ package me.tr.trDatabase.query.params.join;
 import me.tr.trDatabase.TrDatabase;
 import me.tr.trDatabase.query.table.Table;
 import me.tr.trDatabase.query.params.where.Condition;
-import me.tr.trDatabase.query.Select;
+import me.tr.trDatabase.query.sql.Select;
 
 import java.util.ArrayList;
 import java.util.Arrays;

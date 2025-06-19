@@ -1,7 +1,8 @@
-package me.tr.trDatabase.query;
+package me.tr.trDatabase.query.sql;
 
 import me.tr.trDatabase.TrDatabase;
 import me.tr.trDatabase.Utility;
+import me.tr.trDatabase.query.Query;
 import me.tr.trDatabase.query.params.Column;
 import me.tr.trDatabase.query.params.functions.Function;
 import me.tr.trDatabase.query.params.groupby.GroupBy;
@@ -134,7 +135,7 @@ public class Select implements Query {
         String sql = select + String.join(", ", columns.stream().map(Column::toSql).toList()) + ' ' + "FROM " + table.toSql() + (join != null ? String.join("", Arrays.stream(join).map(Join::toSql).toList()) : "") + (where != null ? where.toSql() : "") + (groupBy != null ? groupBy.toSql() : "") + (having != null ? having.toSql() : "") + (orderBy != null ? orderBy.toSql() : "") + (limit != null ? limit.toSql() : "") + ';';
         int qMAmount = Utility.countChars(sql, '?');
         int parameterSize = parameters.size();
-        if (qMAmount != parameterSize) {
+        if (qMAmount >= parameterSize) {
             TrDatabase.instance().logger().error("SQL parameters not correspond.\n Question Marks: " + qMAmount + "\n Parameters: " + parameters + " (" + parameterSize + ')');
             return "";
         }

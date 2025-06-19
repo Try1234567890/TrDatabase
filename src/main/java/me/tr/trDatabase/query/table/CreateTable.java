@@ -3,7 +3,7 @@ package me.tr.trDatabase.query.table;
 import me.tr.trDatabase.TrDatabase;
 import me.tr.trDatabase.Utility;
 import me.tr.trDatabase.query.Query;
-import me.tr.trDatabase.query.Select;
+import me.tr.trDatabase.query.sql.Select;
 import me.tr.trDatabase.query.constraints.Constraint;
 import me.tr.trDatabase.query.table.data.ColumnData;
 

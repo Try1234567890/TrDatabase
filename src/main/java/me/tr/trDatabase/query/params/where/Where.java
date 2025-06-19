@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Where extends Condition{
+public class Where extends Condition {
     private final List<Condition> conditions = new ArrayList<>();
 
     public Where() {
@@ -18,6 +18,11 @@ public class Where extends Condition{
 
     public Where condition(Condition condition) {
         this.conditions.add(condition);
+        return this;
+    }
+
+    public Where conditions(Condition... conditions) {
+        this.conditions.addAll(List.of(conditions));
         return this;
     }
 
@@ -48,7 +53,7 @@ public class Where extends Condition{
     @Override
     public List<Object> parameters() {
         final List<Object> parameters = new ArrayList<>();
-        for(Condition condition : conditions) {
+        for (Condition condition : conditions) {
             parameters.addAll(condition.parameters());
         }
         return parameters;

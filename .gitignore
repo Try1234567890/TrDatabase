@@ -1,0 +1,5 @@
+/src/main/test/
+/.idea/
+/target/
+/TrDatabase.iml
+/dependency-reduced-pom.xml

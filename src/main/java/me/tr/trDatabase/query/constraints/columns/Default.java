@@ -16,8 +16,8 @@ public class Default extends ColumnConstraint {
         return value;
     }
 
-    public Default value(String value) {
-        this.value = Utility.checkQuotes(value);
+    public Default value(Object value) {
+        this.value = String.valueOf(value);
         return this;
     }
 
